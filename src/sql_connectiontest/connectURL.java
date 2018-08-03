@@ -20,12 +20,12 @@ public class connectURL {
             con = DriverManager.getConnection(connectionURL);
 
             // Create and execute an SQL statement that returns some data
-            String SQL = "SELECT * FROM Player";
+            String SQL = "SELECT * FROM Game";
             stmt = con.createStatement();
             rs = stmt.executeQuery(SQL);
             while (rs.next()) {
-                System.out.println(rs.getString("player_id") + " " +
-                        rs.getString("first_name"));
+                System.out.println(rs.getString("game_id") + "\t" +
+                        rs.getString("game_title"));
             }
         } catch (Exception e) {
             e.printStackTrace();
