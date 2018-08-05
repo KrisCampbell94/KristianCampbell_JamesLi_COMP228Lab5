@@ -93,6 +93,12 @@ public class jswingLayout {
         buttonC.addActionListener(
                 e -> {
                     label.setText("DISPLAY");
+                    fName.setVisible(false);
+                    lName.setVisible(false);
+                    address.setVisible(false);
+                    pCode.setVisible(false);
+                    province.setVisible(false);
+                    phone.setVisible(false);
                     buttonConfirm.setVisible(false);
                     aBox.remove(buttonConfirm);
                 }
