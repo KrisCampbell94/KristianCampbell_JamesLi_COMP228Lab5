@@ -10,14 +10,17 @@ public class jswingLayout {
         JFrame frame = new JFrame("Panel Layout");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton buttonA = new JButton("BUTTON A");
+        JButton buttonA = new JButton("INSERT");
         buttonA.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        JButton buttonB = new JButton("BUTTON B");
+        JButton buttonB = new JButton("UPDATE");
         buttonB.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        JButton buttonC = new JButton("BUTTON C");
+        JButton buttonC = new JButton("DISPLAY");
         buttonC.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+        JButton buttonConfirm = new JButton("Confirm");
+        buttonConfirm.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
@@ -26,9 +29,9 @@ public class jswingLayout {
         topPanel.add(buttonC);
 
 
-
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBorder(BorderFactory.createTitledBorder("Bottom Panel"));
+
 
         Box aBox = Box.createVerticalBox();
         //aBox.setLayout(new BoxLayout(aBox,BoxLayout.LINE_AXIS));
@@ -40,12 +43,15 @@ public class jswingLayout {
                     label.setText("INSERT");
                     label.setFont( new Font("serif", Font.PLAIN, 20));
                     aBox.setPreferredSize(new Dimension(200,300));
+                    aBox.add(buttonConfirm);
                 }
         );
         buttonB.addActionListener(
-                e -> {label.setText("UPDATE");
-                label.setFont( new Font("serif", Font.PLAIN, 100));
-                    aBox.setPreferredSize(new Dimension(400,300));
+                e -> {
+                    label.setText("UPDATE");
+                    label.setFont( new Font("serif", Font.PLAIN, 20));
+                    aBox.setPreferredSize(new Dimension(200,300));
+                    aBox.add(buttonConfirm);
                 }
         );
         buttonC.addActionListener(
@@ -64,7 +70,6 @@ public class jswingLayout {
         scrollPane.setPreferredSize(new Dimension(200,100));
 
         bottomPanel.add(scrollPane);
-
 
         //Container container = frame.getContentPane();
         frame.setLayout(new GridBagLayout());
