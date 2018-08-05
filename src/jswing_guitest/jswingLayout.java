@@ -2,6 +2,8 @@ package jswing_guitest;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class jswingLayout {
     public static void main(String[] args) {
@@ -17,17 +19,52 @@ public class jswingLayout {
         JButton buttonC = new JButton("BUTTON C");
         buttonC.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-        JButton button1 = new JButton("BUTTON BELOW");
-        button1.setAlignmentY(Component.TOP_ALIGNMENT);
-
         JPanel topPanel = new JPanel();
-        //topPanel.setBorder(BorderFactory.createTitledBorder("Top"));
+        topPanel.setLayout(new FlowLayout());
         topPanel.add(buttonA);
+        topPanel.add(buttonB);
+        topPanel.add(buttonC);
+
+
 
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setBorder(BorderFactory.createTitledBorder("Bottom"));
-        bottomPanel.setLayout(new BoxLayout(bottomPanel,BoxLayout.LINE_AXIS));
-        bottomPanel.add(button1);
+        bottomPanel.setBorder(BorderFactory.createTitledBorder("Bottom Panel"));
+
+        Box aBox = Box.createVerticalBox();
+        //aBox.setLayout(new BoxLayout(aBox,BoxLayout.LINE_AXIS));
+        aBox.setPreferredSize(new Dimension(200,300));
+
+        JLabel label = new JLabel("Nothing to display here");
+        buttonA.addActionListener(
+                e -> {
+                    label.setText("INSERT");
+                    label.setFont( new Font("serif", Font.PLAIN, 20));
+                    aBox.setPreferredSize(new Dimension(200,300));
+                }
+        );
+        buttonB.addActionListener(
+                e -> {label.setText("UPDATE");
+                label.setFont( new Font("serif", Font.PLAIN, 100));
+                    aBox.setPreferredSize(new Dimension(400,300));
+                }
+        );
+        buttonC.addActionListener(
+                e -> label.setText("DISPLAY")
+        );
+
+
+        aBox.add(label);
+
+        JScrollPane scrollPane = new JScrollPane(aBox,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Bottom Panel"));
+
+        scrollPane.setPreferredSize(new Dimension(200,100));
+
+        bottomPanel.add(scrollPane);
+
 
         //Container container = frame.getContentPane();
         frame.setLayout(new GridBagLayout());
@@ -37,35 +74,24 @@ public class jswingLayout {
 
         c.gridx=0;
         c.gridy=0;
-        c.gridwidth = 1;
+        c.gridwidth = 3;
         c.gridheight = 1;
-        //c.weightx = c.weighty = 1;
-        frame.add(buttonA,c);
-
-        c.gridx=1;
-        c.gridy=0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        //c.weightx = c.weighty = 1;
-        frame.add(buttonB,c);
-
-        c.gridx=2;
-        c.gridy=0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        //c.weightx = c.weighty = 1;
-        frame.add(buttonC,c);
+        c.weightx = 1;
+        frame.add(topPanel,c);
 
         c.gridx=0;
         c.gridy=1;
         c.gridwidth = 3;
         c.gridheight = 1;
         c.weightx = c.weighty = 1;
-        frame.add(bottomPanel,c);
+        //frame.add(bottomPanel,c);
+        frame.add(scrollPane,c);
         //container.add(topPanel);
         //container.add(bottomPanel);
 
-        frame.setSize(340, 300);
+        frame.setMinimumSize(new Dimension(340, 300));
         frame.setVisible(true);
+
+
     }
 }

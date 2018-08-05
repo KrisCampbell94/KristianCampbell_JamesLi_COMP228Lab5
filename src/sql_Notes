@@ -1,0 +1,18 @@
+--INSERT
+----------------------------------
+INSERT INTO [Table_Name] ([column1], [column2], ..., [columnN])
+    VALUES ([value1], [value2], ..., [valueN]);
+
+
+--UPDATE
+-------------------------------------
+SELECT * FROM [Table_Name] WHERE [column1 (ID)] = [value1 (ID)];
+
+UPDATE [Table_Name]
+    SET [column2] = [value2], [column3] = [value3], ...,
+    [columnN] = [valueN]
+    WHERE [column1 (ID)] = [value1 (ID)];
+
+--DISPLAY
+---------------------------------------
+SELECT *[ALL] FROM [Table_Name];
