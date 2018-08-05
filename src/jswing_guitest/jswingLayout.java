@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class jswingLayout {
     public static void main(String[] args) {
@@ -28,11 +30,17 @@ public class jswingLayout {
         comboPlayers.setSize(10,10);
 
         JTextField fName = new JTextField("First Name");
+        fName.setForeground(Color.GRAY);
         JTextField lName = new JTextField("Last Name");
+        lName.setForeground(Color.GRAY);
         JTextField address = new JTextField("Address");
+        address.setForeground(Color.GRAY);
         JTextField pCode = new JTextField("Postal Code");
+        pCode.setForeground(Color.GRAY);
         JTextField province = new JTextField("Province (2 letters)");
+        province.setForeground(Color.GRAY);
         JTextField phone = new JTextField("Phone Number");
+        phone.setForeground(Color.GRAY);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
@@ -49,10 +57,17 @@ public class jswingLayout {
         //aBox.setLayout(new BoxLayout(aBox,BoxLayout.LINE_AXIS));
         aBox.setPreferredSize(new Dimension(100,100));
 
-        JLabel label = new JLabel("Nothing to display here");
+        JScrollPane scrollPane = new JScrollPane(aBox,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Database"));
+
+        JLabel label = new JLabel();
         buttonA.addActionListener(
                 e -> {
-                    label.setText("INSERT");
+                    scrollPane.setBorder(BorderFactory.createTitledBorder("INSERT"));
+                    //label.setText("INSERT");
                     label.setFont( new Font("serif", Font.PLAIN, 20));
                     fName.setVisible(true);
                     lName.setVisible(true);
@@ -74,7 +89,8 @@ public class jswingLayout {
         );
         buttonB.addActionListener(
                 e -> {
-                    label.setText("UPDATE");
+                    scrollPane.setBorder(BorderFactory.createTitledBorder("UPDATE"));
+                    //label.setText("UPDATE");
                     label.setFont( new Font("serif", Font.PLAIN, 20));
                     fName.setVisible(false);
                     lName.setVisible(false);
@@ -92,7 +108,8 @@ public class jswingLayout {
         );
         buttonC.addActionListener(
                 e -> {
-                    label.setText("DISPLAY");
+                    scrollPane.setBorder(BorderFactory.createTitledBorder("DISPLAY"));
+                    //label.setText("DISPLAY");
                     fName.setVisible(false);
                     lName.setVisible(false);
                     address.setVisible(false);
@@ -104,14 +121,86 @@ public class jswingLayout {
                 }
         );
 
+        fName.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        fName.setText("");
+                        fName.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
+        lName.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        lName.setText("");
+                        lName.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
+        address.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        address.setText("");
+                        address.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
+        pCode.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        pCode.setText("");
+                        pCode.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
+        province.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        province.setText("");
+                        province.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
+        phone.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        phone.setText("");
+                        phone.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
 
         aBox.add(label);
-
-        JScrollPane scrollPane = new JScrollPane(aBox,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        scrollPane.setBorder(BorderFactory.createTitledBorder("Bottom Panel"));
 
         scrollPane.setPreferredSize(new Dimension(200,100));
 
