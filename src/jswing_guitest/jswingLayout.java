@@ -9,27 +9,33 @@ import java.awt.event.FocusListener;
 
 public class jswingLayout {
     public static void main(String[] args) {
+
+        //Buttons
         JFrame frame = new JFrame("Panel Layout");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JButton buttonA = new JButton("INSERT");
         buttonA.setAlignmentY(Component.CENTER_ALIGNMENT);
-
         JButton buttonB = new JButton("UPDATE");
         buttonB.setAlignmentY(Component.CENTER_ALIGNMENT);
-
         JButton buttonC = new JButton("DISPLAY");
         buttonC.setAlignmentY(Component.CENTER_ALIGNMENT);
-
         JButton buttonConfirm = new JButton("Confirm");
         buttonConfirm.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
+        //Player ComboBox
         String[] players = new String[] {"1", "2", "3", "4"};
         JComboBox<String> comboPlayers = new JComboBox<String>(players);
         comboPlayers.setAlignmentY(Component.TOP_ALIGNMENT);
         comboPlayers.setAlignmentX(Component.LEFT_ALIGNMENT);
         comboPlayers.setMaximumSize(new Dimension(40, 20));
 
+        //Game ComboBox
+        String[] games = new String[] {"Fortnite", "Mario", "CSGO", "Super Smash"};
+        JComboBox<String> comboGames = new JComboBox<String>(games);
+        comboGames.setAlignmentX(Component.LEFT_ALIGNMENT);
+        comboGames.setMaximumSize(new Dimension(100, 20));
+
+        //All TextFields
         JTextField fName = new JTextField("First Name");
         fName.setForeground(Color.GRAY);
         JTextField lName = new JTextField("Last Name");
@@ -42,6 +48,8 @@ public class jswingLayout {
         province.setForeground(Color.GRAY);
         JTextField phone = new JTextField("Phone Number");
         phone.setForeground(Color.GRAY);
+        JTextField score = new JTextField("Score");
+        score.setForeground(Color.GRAY);
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
@@ -56,7 +64,7 @@ public class jswingLayout {
 
         Box aBox = Box.createVerticalBox();
         //aBox.setLayout(new BoxLayout(aBox,BoxLayout.LINE_AXIS));
-        aBox.setPreferredSize(new Dimension(100,100));
+        aBox.setPreferredSize(new Dimension(100,150));
 
         JScrollPane scrollPane = new JScrollPane(aBox,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -76,16 +84,21 @@ public class jswingLayout {
                     pCode.setVisible(true);
                     province.setVisible(true);
                     phone.setVisible(true);
+                    comboGames.setVisible(true);
                     buttonConfirm.setVisible(true);
+                    score.setVisible(true);
+                    comboPlayers.setVisible(false);
+                    aBox.remove(comboPlayers);
                     aBox.add(fName);
                     aBox.add(lName);
                     aBox.add(address);
                     aBox.add(pCode);
                     aBox.add(province);
                     aBox.add(phone);
+                    aBox.add(comboGames);
+                    aBox.add(score);
                     aBox.add(buttonConfirm);
-                    comboPlayers.setVisible(false);
-                    aBox.remove(comboPlayers);
+
                 }
         );
         buttonB.addActionListener(
@@ -99,6 +112,8 @@ public class jswingLayout {
                     pCode.setVisible(false);
                     province.setVisible(false);
                     phone.setVisible(false);
+                    score.setVisible(false);
+                    comboGames.setVisible(false);
 
                     comboPlayers.setVisible(true);
                     aBox.add(comboPlayers);
@@ -118,6 +133,8 @@ public class jswingLayout {
                     pCode.setVisible(false);
                     province.setVisible(false);
                     phone.setVisible(false);
+                    score.setVisible(false);
+                    comboGames.setVisible(false);
                     buttonConfirm.setVisible(false);
                     aBox.remove(buttonConfirm);
 
@@ -205,6 +222,19 @@ public class jswingLayout {
                     }
                 }
         );
+        score.addFocusListener(
+                new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        score.setText("");
+                        score.setForeground(Color.BLACK);
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                    }
+                }
+        );
 
         aBox.add(label);
 
@@ -235,7 +265,7 @@ public class jswingLayout {
         //container.add(topPanel);
         //container.add(bottomPanel);
 
-        frame.setMinimumSize(new Dimension(340, 300));
+        frame.setMinimumSize(new Dimension(340, 400));
         frame.setVisible(true);
 
 
