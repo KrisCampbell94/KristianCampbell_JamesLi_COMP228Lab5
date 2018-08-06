@@ -27,7 +27,8 @@ public class jswingLayout {
         String[] players = new String[] {"1", "2", "3", "4"};
         JComboBox<String> comboPlayers = new JComboBox<String>(players);
         comboPlayers.setAlignmentY(Component.TOP_ALIGNMENT);
-        comboPlayers.setSize(10,10);
+        comboPlayers.setAlignmentX(Component.LEFT_ALIGNMENT);
+        comboPlayers.setMaximumSize(new Dimension(40, 20));
 
         JTextField fName = new JTextField("First Name");
         fName.setForeground(Color.GRAY);
@@ -102,6 +103,7 @@ public class jswingLayout {
                     comboPlayers.setVisible(true);
                     aBox.add(comboPlayers);
 
+
                     buttonConfirm.setVisible(true);
                     aBox.add(buttonConfirm);
                 }
@@ -118,6 +120,10 @@ public class jswingLayout {
                     phone.setVisible(false);
                     buttonConfirm.setVisible(false);
                     aBox.remove(buttonConfirm);
+
+                    comboPlayers.setVisible(true);
+                    aBox.add(comboPlayers);
+
                 }
         );
 
