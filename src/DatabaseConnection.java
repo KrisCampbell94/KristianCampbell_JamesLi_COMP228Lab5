@@ -9,6 +9,7 @@ public class DatabaseConnection {
     private static Statement stmt = null;
     private static ResultSet rs = null;
     private static PreparedStatement pst = null;
+    private static ResultSetMetaData md = null;
 
     public static List<String> fillListString(List<String> aList, boolean isPlayerNotGame)
     throws Exception{
@@ -47,6 +48,34 @@ public class DatabaseConnection {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         con = DriverManager.getConnection(URL);
         stmt = con.createStatement();
+    }
+
+
+    public static int setQueryToTable(String query) throws Exception{
+        connectToDatabase();
+        rs = stmt.executeQuery(query);
+        md = rs.getMetaData();
+
+        rs.last();
+        return rs.getRow();
+    }
+    public static ResultSetMetaData getMd() throws Exception{
+        connectToDatabase();
+        return md;
+    }
+    public static ResultSet getRs() throws Exception{
+        connectToDatabase();
+        return rs;
+    }
+    public static void databaseDisconnect(){
+        try {
+            con.close();
+            stmt.close();
+            rs.close();
+            pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

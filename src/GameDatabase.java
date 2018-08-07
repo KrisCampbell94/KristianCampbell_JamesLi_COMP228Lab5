@@ -1,4 +1,5 @@
 import datepicker.DatePicker;
+import jswing_guitest.DisplayTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,27 +10,31 @@ import java.util.List;
 
 public class GameDatabase extends JFrame {
     // Buttons
-    private final JButton insert, update, display, datePopup, confirm;
+    private JButton insert, update, display, datePopup, confirm;
+
+    private JButton game,player,gameAndPlayer;
 
     // Boolean for confirmation
     private boolean isInsertNotUpdate;
 
     // Lists and ComboBoxes
     private List<String> getGameID, getPlayerID;
-    private final JComboBox<String> comboGames, comboPlayers;
+    private JComboBox<String> comboGames, comboPlayers;
 
     // TextFields and Strings for the TextField titles
-    private final JTextField[] infoFields;
-    private final String[] infoTitles;
+    private JTextField[] infoFields;
+    private String[] infoTitles;
 
     // Panels, Box, and ScrollPane
-    private final JPanel topPanel, bottomPanel;
-    private final Box tabBox;
-    private final JScrollPane scrollPane;
+    private JPanel topPanel, bottomPanel;
+    private Box tabBox;
+    private JScrollPane scrollPane;
+    private DisplayTable displayTable;
 
-    public GameDatabase(){
+    public GameDatabase() {
         super("Game and Player Database - © Kris Campbell & James Li");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
         insert = new JButton("INSERT");
         update = new JButton("UPDATE");
@@ -63,9 +68,9 @@ public class GameDatabase extends JFrame {
 
         infoFields = new JTextField[8];
         infoTitles = new String[]{
-                "First Name","Last Name","Address",
-                "Postal Code","Province (2 Letters)",
-                "Phone Number","Date","Score"
+                "First Name", "Last Name", "Address",
+                "Postal Code", "Province (2 Letters)",
+                "Phone Number", "Date", "Score"
         };
         for (int i = 0; i < infoFields.length; i++) {
             infoFields[i] = new JTextField(infoTitles[i]);
@@ -89,11 +94,11 @@ public class GameDatabase extends JFrame {
         }
 
         tabBox = Box.createVerticalBox();
-        tabBox.setPreferredSize(new Dimension(200,300));
+        tabBox.setPreferredSize(new Dimension(200, 300));
         scrollPane = new JScrollPane(tabBox,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setPreferredSize(new Dimension(300,300));
+        scrollPane.setPreferredSize(new Dimension(300, 300));
 
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
@@ -103,18 +108,29 @@ public class GameDatabase extends JFrame {
         bottomPanel = new JPanel();
         bottomPanel.add(scrollPane);
 
+
+        game = new JButton("GAME");
+        player = new JButton("PLAYER");
+        gameAndPlayer = new JButton("PLAYER AND GAME");
+
         setLayout(new GridBagLayout());
         GridBagConstraints grid = new GridBagConstraints();
         grid.fill = GridBagConstraints.BOTH;
-        grid.insets = new Insets(3,3,3,3);
+        grid.insets = new Insets(5, 5, 5, 5);
 
-        grid.gridx=0; grid.gridy=0; grid.gridwidth = 3;
-        grid.gridheight =1; grid.weightx = 1;
-        add(topPanel,grid);
+        grid.gridx = 0;
+        grid.gridy = 0;
+        grid.gridwidth = 3;
+        grid.gridheight = 1;
+        grid.weightx = 1;
+        add(topPanel, grid);
 
-        grid.gridx=0; grid.gridy=1; grid.gridwidth = 3;
-        grid.gridheight =1; grid.weightx = grid.weighty = 1;
-        add(bottomPanel,grid);
+        grid.gridx = 0;
+        grid.gridy = 1;
+        grid.gridwidth = 5;
+        grid.gridheight = 1;
+        grid.weightx = grid.weighty = 1;
+        add(bottomPanel, grid);
 
         insert.addActionListener(
                 e -> insertSelected()
@@ -123,18 +139,26 @@ public class GameDatabase extends JFrame {
                 e -> updateSelected()
         );
         display.addActionListener(
-                e -> {
-                    scrollPane.setBorder(BorderFactory.createTitledBorder("DELETE"));
-                }
+                e -> displaySelected()
         );
-        insertSelected();
 
         datePopup.addActionListener(
-                e->{
+                e -> {
                     infoFields[6].setText(new DatePicker(this).setPickedDate());
                     infoFields[6].setForeground(Color.BLACK);
                 }
         );
+
+        displayTable = new DisplayTable();
+        game.addActionListener(e -> {
+            displayTable.updateTable("SELECT * FROM game");
+        });
+        player.addActionListener(e -> {
+            displayTable.updateTable("SELECT * FROM player");
+        });
+        gameAndPlayer.addActionListener(e -> {
+            displayTable.updateTable("SELECT * FROM playerandgame");
+        });
     }
 
     private void insertSelected(){
@@ -147,6 +171,10 @@ public class GameDatabase extends JFrame {
         confirm.setVisible(true);
         datePopup.setVisible(true);
         comboPlayers.setVisible(false);
+        game.setVisible(false);
+        player.setVisible(false);
+        gameAndPlayer.setVisible(false);
+        displayTable.setVisible(false);
 
         for (int i = 0; i < 6; i++) {
             tabBox.add(infoFields[i]);
@@ -170,6 +198,10 @@ public class GameDatabase extends JFrame {
         comboPlayers.setVisible(true);
         infoFields[6].setVisible(false);
         infoFields[7].setVisible(false);
+        game.setVisible(false);
+        player.setVisible(false);
+        gameAndPlayer.setVisible(false);
+        displayTable.setVisible(false);
 
         tabBox.add(comboPlayers);
         for (int i = 0; i < 6; i++) {
@@ -187,5 +219,14 @@ public class GameDatabase extends JFrame {
         confirm.setVisible(false);
         datePopup.setVisible(false);
         comboPlayers.setVisible(false);
+        game.setVisible(true);
+        player.setVisible(true);
+        gameAndPlayer.setVisible(true);
+        displayTable.setVisible(true);
+
+        tabBox.add(game);
+        tabBox.add(player);
+        tabBox.add(gameAndPlayer);
+        tabBox.add(displayTable);
     }
 }
