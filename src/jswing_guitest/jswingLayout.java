@@ -72,12 +72,12 @@ public class jswingLayout {
 
         scrollPane.setBorder(BorderFactory.createTitledBorder("Database"));
 
-        JLabel label = new JLabel();
+        DisplayTable aTable = new DisplayTable();
+
         buttonA.addActionListener(
                 e -> {
                     scrollPane.setBorder(BorderFactory.createTitledBorder("INSERT"));
                     //label.setText("INSERT");
-                    label.setFont( new Font("serif", Font.PLAIN, 20));
                     fName.setVisible(true);
                     lName.setVisible(true);
                     address.setVisible(true);
@@ -99,13 +99,13 @@ public class jswingLayout {
                     aBox.add(score);
                     aBox.add(buttonConfirm);
 
+                    aBox.remove(aTable);
                 }
         );
         buttonB.addActionListener(
                 e -> {
                     scrollPane.setBorder(BorderFactory.createTitledBorder("UPDATE"));
                     //label.setText("UPDATE");
-                    label.setFont( new Font("serif", Font.PLAIN, 20));
                     fName.setVisible(false);
                     lName.setVisible(false);
                     address.setVisible(false);
@@ -121,6 +121,8 @@ public class jswingLayout {
 
                     buttonConfirm.setVisible(true);
                     aBox.add(buttonConfirm);
+
+                    aBox.remove(aTable);
                 }
         );
         buttonC.addActionListener(
@@ -138,10 +140,10 @@ public class jswingLayout {
                     buttonConfirm.setVisible(false);
                     aBox.remove(buttonConfirm);
 
-                    comboPlayers.setVisible(true);
-                    aBox.add(comboPlayers);
+                    comboPlayers.setVisible(false);
+                    //aBox.add(comboPlayers);
 
-                    new DisplayTable();
+                    aBox.add(aTable);
 
                 }
         );
@@ -237,9 +239,6 @@ public class jswingLayout {
                     }
                 }
         );
-
-        aBox.add(label);
-
         scrollPane.setPreferredSize(new Dimension(200,100));
 
         bottomPanel.add(scrollPane);

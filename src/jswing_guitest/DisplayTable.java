@@ -1,6 +1,6 @@
 package jswing_guitest;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -8,10 +8,11 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.table.*;
+import james.ResultSetTableModel;
 
-public class DisplayTable {
+public class DisplayTable extends JPanel {
     public static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public static final String DATABASE_URL = "jdbc:sqlserver://localhost:1433;database=GamesDB;integratedSecurity=true";
+    public static final String DATABASE_URL = "jdbc:sqlserver://localhost:1433;database=GameDB;integratedSecurity=true";
 
     public static final String DEFAULT_QUERY = "SELECT * FROM Game";
 
@@ -20,7 +21,7 @@ public class DisplayTable {
 
     // Constructor
     public DisplayTable() {
-        super("Displaying Table");
+        //super("Displaying Table");
 
         // Initialize ResultSetTableModel and display database table
         try {
@@ -28,7 +29,7 @@ public class DisplayTable {
 
             // --- Setup our GUI  --- //
             // Setup text area
-            queryArea = new JTextArea(DEFAULT_QUERY, 3, 100); // Set default text to DEFAULT_QUERY
+            queryArea = new JTextArea(DEFAULT_QUERY, 3, 15); // Set default text to DEFAULT_QUERY
             queryArea.setWrapStyleWord(true); // Wrap text
             queryArea.setLineWrap(true);
 
@@ -95,7 +96,7 @@ public class DisplayTable {
             });
 
             // Set window size and display = true
-            setSize(500, 250);
+            setSize(150, 100);
             setVisible(true);
         }
         catch(ClassNotFoundException e) {
@@ -114,17 +115,17 @@ public class DisplayTable {
         }
 
         // Listen to window event
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        //setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         // Clicked the x button to close the application
-        addWindowListener(
-                new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        tableModel.disconnectFromDatabase(); // Safely close all connections
-                        System.exit(0);
-                    }
-                }
-        );
+       //addWindowListener(
+       //        new WindowAdapter() {
+       //            @Override
+       //            public void windowClosed(WindowEvent e) {
+       //                tableModel.disconnectFromDatabase(); // Safely close all connections
+       //                System.exit(0);
+       //            }
+       //        }
+       //);
     }
 }
