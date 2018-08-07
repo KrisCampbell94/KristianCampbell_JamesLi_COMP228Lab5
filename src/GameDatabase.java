@@ -148,6 +148,36 @@ public class GameDatabase extends JFrame {
                     infoFields[6].setForeground(Color.BLACK);
                 }
         );
+        confirm.addActionListener(
+                e -> {
+                    if(isInsertNotUpdate){
+                        try {
+                            DatabaseConnection.insertPlayerToDatabase(
+                                    infoFields[0].getText(),infoFields[1].getText(),
+                                    infoFields[2].getText(),
+                                    infoFields[3].getText(),infoFields[4].getText(),
+                                    infoFields[5].getText(),
+                                    infoFields[6].getText(),infoFields[7].getText(),
+                                    comboGames.getSelectedIndex()
+                            );
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                    else{
+                        try {
+                            DatabaseConnection.updatePlayerToDatabase(
+                                    comboPlayers.getSelectedIndex(),infoFields[0].getText(),infoFields[1].getText(),
+                                    infoFields[2].getText(),
+                                    infoFields[3].getText(),infoFields[4].getText(),
+                                    infoFields[5].getText()
+                            );
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+        );
 
         displayTable = new DisplayTable();
         game.addActionListener(e -> {
@@ -159,6 +189,9 @@ public class GameDatabase extends JFrame {
         gameAndPlayer.addActionListener(e -> {
             displayTable.updateTable("SELECT * FROM playerandgame");
         });
+
+        setMinimumSize(new Dimension(400, 400));
+        setVisible(true);
     }
 
     private void insertSelected(){

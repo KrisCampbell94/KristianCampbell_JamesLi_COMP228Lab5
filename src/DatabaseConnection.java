@@ -44,29 +44,71 @@ public class DatabaseConnection {
         return aList;
     }
 
+    public static void insertPlayerToDatabase(
+            String fName, String lName, String address,
+            String pCode, String province, String number,
+            String date, String score, int getGameID
+            ) throws Exception{
+        connectToDatabase();
+
+        rs = stmt.executeQuery("SELECT COUNT (*) AS row_count FROM Player");
+        pst = con.prepareStatement(
+                "INSERT into Player (player_id, " +
+                        "first_name, last_name, address, " +
+                        "postal_code, province, phone_number)" +
+                        "VALUES(?,?,?,?,?,?,?)");
+        rs.next();
+        int getPlayerID = rs.getInt("row_count");
+        pst.setInt(1,getPlayerID);
+        pst.setString(2,fName);
+        pst.setString(3,lName);
+        pst.setString(4, address);
+        pst.setString(5,pCode);
+        pst.setString(6,province);
+        pst.setString(7,number);
+        pst.executeUpdate();
+
+        rs = stmt.executeQuery("SELECT COUNT (*) AS row_count FROM PlayerAndGame");
+        pst = con.prepareStatement(
+                "INSERT into PlayerAndGame (player_game_id, " +
+                        "game_id, player_id, playing_date, score) " +
+                        "UPDATE VALUES (?,?,?,?,?)");
+        rs.next();
+        int getPlayerAndGameID = rs.getInt("row_count");
+        pst.setInt(1,getPlayerAndGameID);
+        pst.setInt(2,getGameID);
+        pst.setInt(3,getPlayerID);
+        pst.setString(4, String.valueOf(Date.valueOf(date)));
+        pst.setString(5,score);
+    }
+
+    public static void updatePlayerToDatabase (
+            int getPlayerID, String fName, String lName,
+            String address, String pCode, String province,
+            String number) throws Exception{
+        pst = con.prepareStatement(
+                "UPDATE Player " +
+                        "SET first_name = ?, last_name = ?," +
+                        "address = ?, postal_code = ?, province = ?," +
+                        "phone_number = ? WHERE player_id = ?"
+        );
+        pst.setString(1,fName);
+        pst.setString(2,lName);
+        pst.setString(3, address);
+        pst.setString(4,pCode);
+        pst.setString(5,province);
+        pst.setString(6,number);
+        pst.setInt(7,getPlayerID);
+
+        pst.executeUpdate();
+    }
+
     private static void connectToDatabase() throws Exception{
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         con = DriverManager.getConnection(URL);
         stmt = con.createStatement();
     }
 
-
-    public static int setQueryToTable(String query) throws Exception{
-        connectToDatabase();
-        rs = stmt.executeQuery(query);
-        md = rs.getMetaData();
-
-        rs.last();
-        return rs.getRow();
-    }
-    public static ResultSetMetaData getMd() throws Exception{
-        connectToDatabase();
-        return md;
-    }
-    public static ResultSet getRs() throws Exception{
-        connectToDatabase();
-        return rs;
-    }
     public static void databaseDisconnect(){
         try {
             con.close();
