@@ -141,6 +141,8 @@ public class jswingLayout {
                     comboPlayers.setVisible(true);
                     aBox.add(comboPlayers);
 
+                    new DisplayTable();
+
                 }
         );
 
